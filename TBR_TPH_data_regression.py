@@ -5,10 +5,11 @@ import pandas as pd
 from matplotlib import pyplot as plt
 from scipy.sparse import csc_matrix, spdiags
 from scipy.sparse.linalg import spsolve
+from sklearn.preprocessing import StandardScaler
 from sklearn.cross_decomposition import PLSRegression
 
 
-def ALSBaselineCorrection(y, lam=1E6, p=0.001, niter=30):
+def ALSBaselineCorrection(y, lam=1E6, p=0.0001, niter=30):
     m = len(y)
     w = np.ones(m)
     D = csc_matrix(np.diff(np.eye(m), 3))
@@ -22,23 +23,18 @@ def ALSBaselineCorrection(y, lam=1E6, p=0.001, niter=30):
 
 path = 'raw_data/TBR_TPH_data_regression'
 files = os.listdir(path)
-
-data_as_list = []
-data_df = pd.DataFrame()
+data_per_mmt = []
 
 for file in files:
-    # extract txt content as DataFrame
-    df = pd.read_csv(os.path.join(path, file), header=None, skiprows=[0], names=['wave', 'intst'], sep='\t')
-    df['intst'] -= ALSBaselineCorrection(df['intst'])
 
-    # collect concentrations, unit=uM
+    # collect concentrations through filenames with unit=M
     TBR = re.search(r'([0-9.]+[un]M)(theobr)', file)
     if TBR is not None:
         TBR = TBR.group(1)
         if TBR.endswith('nM'):
-            TBR = float(TBR.removesuffix('nM')) / 1000
+            TBR = float(TBR.removesuffix('nM')) * 1E-9
         else:
-            TBR = float(TBR.removesuffix('uM'))
+            TBR = float(TBR.removesuffix('uM')) * 1E-6
     else:
         TBR = 0.0
 
@@ -46,12 +42,21 @@ for file in files:
     if TPH is not None:
         TPH = TPH.group(1)
         if TPH.endswith('nM'):
-            TPH = float(TPH.removesuffix('nM')) / 1000
+            TPH = float(TPH.removesuffix('nM')) * 1E-9
         else:
-            TPH = float(TPH.removesuffix('uM'))
+            TPH = float(TPH.removesuffix('uM')) * 1E-6
     else:
         TPH = 0.0
 
-    data_as_list.append([file, np.array(df['intst']), TBR, TPH])
+    # read Raman data and preprocess
+    df = pd.read_csv(os.path.join(path, file), header=None, skiprows=[0], names=['wave', 'intst'], sep='\t')
+    df['intst'] -= ALSBaselineCorrection(df['intst'])
+    normalised_intst = StandardScaler().fit_transform(df['intst'].values.reshape(-1, 1))
+    data_per_mmt.append([file, TBR, TPH] + normalised_intst.flatten().tolist())
 
-data_df = pd.DataFrame(data_as_list, columns=['file', 'intst', 'TBR', 'TPH'])
+data_df = pd.DataFrame(
+    data_per_mmt, columns=['filename', 'TBR', 'TPH'] + ['wave_'+str(x+1) for x in range(len(df['intst']))]
+)
+
+data_df.to_csv('initial_process/TBR_TPH_data_df.csv', index=False)
+
