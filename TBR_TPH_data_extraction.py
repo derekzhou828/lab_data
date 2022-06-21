@@ -6,7 +6,7 @@ from scipy.sparse import csc_matrix, spdiags
 from scipy.sparse.linalg import spsolve
 
 # read e-sers data from txt file
-path = 'raw_data/TBR_TPH_data_extraction'
+path = 'raw_data/raman-example'
 files = os.listdir(path)
 file_list = []
 for file in files:
