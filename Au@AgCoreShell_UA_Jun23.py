@@ -21,7 +21,7 @@ def ALSBaselineCorrection(y, lam=1E6, p=0.0001, niter=30):
 
 
 # read times v.s. potentials
-path_gamry = 'raw_data/AgNPs_APTES_FTO_UA_100uM_CRN_0uM_R6G_10uM_Jun23/Potential_Sequence'
+path_gamry = 'raw_data/AuAgCoreShell_UA_100uM_CRN_0uM_R6G_10uM_Jun23/Potential_Sequence'
 files_gamry = os.listdir(path_gamry)
 time_potential = {}
 
@@ -37,7 +37,7 @@ for file in files_gamry:
 
 
 # data extraction and preprocessing
-path_raman = 'raw_data/AgNPs_APTES_FTO_UA_100uM_CRN_0uM_R6G_10uM_Jun23/Scan_RamanShift'
+path_raman = 'raw_data/AuAgCoreShell_UA_100uM_CRN_0uM_R6G_10uM_Jun23/Scan_RamanShift'
 files_raman = os.listdir(path_raman)
 data_single = []
 data_collection = pd.DataFrame()
@@ -71,15 +71,15 @@ data_collection = pd.DataFrame(
     columns=['Filename', 'UA', 'CRN', 'R6G', 'Potential'] + ['wave_' + str(int(x)) for x in wave.tolist()]
 )
 
-data_collection.to_csv('initial_process/AgNPs_UA_Jun23_all.csv', index=False)
+data_collection.to_csv('initial_process/Au@AuCoreShell_UA_Jun23_all.csv', index=False)
 
 # average and plot spectrum
 ax = plt.subplot()
-ax.set_title('100uM UA + 0.1M NaF + 10uM R6G for AgNPs-APTES-FTO')
+ax.set_title('100uM UA + 0.1M NaF + 10uM R6G for Au@AgCoreShell-APTES-FTO')
 ax.set_xlabel('Raman Shift ($\mathregular{cm^{-1}}$)')
 ax.set_ylabel('Intensity (counts $\mathregular{s^{-1}mW^{-1}}$)')
-ax.set_yticks([0, 3000, 6000, 9000, 12000, 15000, 18000, 21000])
-ax.set_yticklabels(['0', '3000', '', '', '', '', '', ''])
+ax.set_yticks([0, 600, 1200, 1800, 2400, 3000, 3600, 4200])
+ax.set_yticklabels(['0', '600', '', '', '', '', '', ''])
 
 data_average = pd.DataFrame()
 for p, g in data_collection.groupby(data_collection['Potential']):
@@ -87,9 +87,9 @@ for p, g in data_collection.groupby(data_collection['Potential']):
     df = pd.DataFrame([mean], columns=mean.index)
     data_average = pd.concat([data_average, df], ignore_index=True)
 
-    plt.plot(wave, mean[4:]+30000*abs(mean['Potential']))
-    ax.annotate(str(mean['Potential']) + ' V', (1700, 500+30000*abs(mean['Potential'])))
+    plt.plot(wave, mean[4:]+6000*abs(mean['Potential']))
+    ax.annotate(str(mean['Potential']) + ' V', (1700, 100+6000*abs(mean['Potential'])))
 
-data_average.to_csv('initial_process/AgNPs_UA_Jun23_average.csv', index=False)
-plt.savefig('fig_gallery/AgNPs_UA_Jun23_1.png')
+data_average.to_csv('initial_process/Au@AuCoreShell_UA_Jun23_average.csv', index=False)
+plt.savefig('fig_gallery/Au@AuCoreShell_UA_Jun23_1.png')
 plt.show()
