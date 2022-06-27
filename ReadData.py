@@ -52,8 +52,9 @@ def ReadData(path_gamry='', path_raman='', date='2022-6-23'):
 
     df_mean = pd.DataFrame()
     for i, p in df_all.groupby('Potential'):
-        mean = round(p.mean(numeric_only=True), 1)
+        mean = p.mean(numeric_only=True)
         df = pd.DataFrame([mean], columns=mean.index)
+        df['Potential'] = round(df['Potential'], 1)
         df_mean = pd.concat([df_mean, df], ignore_index=True)
 
     return df_all, df_mean
