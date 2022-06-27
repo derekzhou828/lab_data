@@ -42,17 +42,17 @@ def ReadData(path_gamry='', path_raman='', date='2022-6-23'):
             time_stamp = int(time.mktime(time_array))
 
         for i in range(len(time_line)):
-            if (time_stamp > time_line[i]) & ((time_stamp + 70) < time_line[i] + 300):
+            if (time_stamp > time_line[i]) & ((time_stamp + 70) <= time_line[i] + 300):
                 potential = float(time_potential[time_line[i]])
                 data_single.append([file, UA, CRN, R6G, potential] + df['intst'].tolist())
 
     df_all = pd.DataFrame(
         data_single, columns=['Filename', 'UA', 'CRN', 'R6G', 'Potential'] + df['wave'].tolist()
-    )
+    ).sort_values('Potential', ascending=False)
 
     df_mean = pd.DataFrame()
-    for p, g in df_all.groupby(df_all['Potential']):
-        mean = round(g.mean(numeric_only=True), 1)
+    for i, p in df_all.groupby('Potential'):
+        mean = round(p.mean(numeric_only=True), 1)
         df = pd.DataFrame([mean], columns=mean.index)
         df_mean = pd.concat([df_mean, df], ignore_index=True)
 
