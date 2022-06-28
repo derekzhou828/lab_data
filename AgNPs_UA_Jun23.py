@@ -13,14 +13,14 @@ df_mean.to_csv('initial_process/AgNPs_UA_Jun23_average.csv', index=False)
 ax = plt.subplot()
 df_plot = df_mean.iloc[:, 4:].T.rename(columns=df_mean['Potential'])
 for i, col in df_plot.iteritems():
-    plt.plot(col+30000*abs(i))
-    ax.annotate(str(i) + ' V', (1700, 500+30000*abs(i)))
+    plt.plot(col+200*abs(i))
+    ax.annotate(str(i) + ' V', (1700, 4+200*abs(i)))
 
 ax.set_title('100uM UA + 0.1M NaF + 10uM R6G for AgNPs-APTES-FTO')
 ax.set_xlabel('Raman Shift ($\mathregular{cm^{-1}}$)')
 ax.set_ylabel('Intensity (counts $\mathregular{s^{-1}mW^{-1}}$)')
-ax.set_yticks([0, 3000, 6000, 9000, 12000, 15000, 18000, 21000])
-ax.set_yticklabels(['0', '3000', '', '', '', '', '', ''])
+ax.set_yticks([0, 20, 40, 60, 80, 100, 120, 140])
+ax.set_yticklabels(['0', '20', '', '', '', '', '', ''])
 
 plt.savefig('fig_gallery/AgNPs_UA_Jun23_1.png')
 plt.show()

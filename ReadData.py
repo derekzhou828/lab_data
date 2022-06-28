@@ -33,7 +33,7 @@ def ReadData(path_gamry='', path_raman='', date='2022-6-23'):
             header=None, skiprows=range(14), names=['wave', 'intst'], sep='\t'
         )
         df = df[(df['wave'] > 500) & (df['wave'] < 1800)]
-        df['intst'] -= ALSBaselineCorrection(df['intst'])
+        df['intst'] = (df['intst'] - ALSBaselineCorrection(df['intst'])) / (7*22)
 
         with open(os.path.join(path_raman, file), 'r') as f:
             lines = f.readlines()
