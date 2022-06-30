@@ -21,10 +21,9 @@ for i, col in df_plot.iloc[:, :9].iteritems():
     ax1.plot(col+200*abs(i))
     ax1.annotate(str(i) + ' V', (1700, 1+200*abs(i)))
 
-for i, col in df_plot.iloc[:, 9:].iteritems():
+for i, col in df_plot.iloc[:, 8:].iteritems():
     ax2.plot(col+50*abs(i))
     ax2.annotate(str(i) + ' V', (1700, 1+50*abs(i)))
-
 
 plt.savefig('fig_gallery/Au@AgCoreShell_UA_Jun29_1.png')
 plt.show()
