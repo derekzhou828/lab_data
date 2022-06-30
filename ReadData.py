@@ -33,7 +33,7 @@ def ReadData(path_gamry='', path_raman='', date='2022-6-23'):
             header=None, skiprows=range(14), names=['wave', 'intst'], sep='\t'
         )
         df = df[(df['wave'] > 500) & (df['wave'] < 1800)]
-        df['intst'] = (df['intst'] - ALSBaselineCorrection(df['intst'])) / (7*22)
+        df['intst'] = (df['intst'] - ALSBaselineCorrection(df['intst'])) / (7*22.5)
 
         with open(os.path.join(path_raman, file), 'r') as f:
             lines = f.readlines()
@@ -48,7 +48,7 @@ def ReadData(path_gamry='', path_raman='', date='2022-6-23'):
 
     df_all = pd.DataFrame(
         data_single, columns=['Filename', 'UA', 'CRN', 'R6G', 'Potential'] + df['wave'].tolist()
-    ).sort_values('Potential', ascending=False)
+    ).sort_values('Potential')
 
     df_mean = pd.DataFrame()
     for i, p in df_all.groupby('Potential'):

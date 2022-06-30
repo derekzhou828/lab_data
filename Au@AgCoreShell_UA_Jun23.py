@@ -13,7 +13,7 @@ df_mean.to_csv('initial_process/Au@AgCoreShell_UA_Jun23_average.csv', index=Fals
 ax = plt.subplot()
 df_plot = df_mean.iloc[:, 4:].T.rename(columns=df_mean['Potential'])
 for i, col in df_plot.iteritems():
-    plt.plot(col+40*abs(i))
+    ax.plot(col+40*abs(i))
     ax.annotate(str(i) + ' V', (1700, 1+40*abs(i)))
 
 ax.set_title('100uM UA + 0.1M NaF + 10uM R6G for Au@AgCoreShell-APTES-FTO')
