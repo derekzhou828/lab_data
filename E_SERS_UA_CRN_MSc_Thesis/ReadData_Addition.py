@@ -81,7 +81,7 @@ def ReadData(path_gamry='', path_raman='', duration=300, date='2022-6-23'):
     df_all = pd.DataFrame(data_single, columns=['Filename', 'UA', 'CRN', 'R6G', 'Potential'] + df['wave'].tolist())
 
     df_mean = pd.DataFrame()
-    for i, p in df_all.drop(columns='R6G').groupby(['UA', 'CRN', 'Potential']):
+    for i, p in df_all.groupby(['UA', 'CRN', 'Potential']):
         mean = p.mean(numeric_only=True)
         df = pd.DataFrame([mean], columns=mean.index)
         df['Potential'] = round(df['Potential'], 1)
