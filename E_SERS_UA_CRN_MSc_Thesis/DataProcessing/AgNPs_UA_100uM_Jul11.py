@@ -11,7 +11,7 @@ df_mean.to_csv('../Data_csv/AgNPs_UA_100uM_Jul11_average.csv', index=False)
 
 fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(16, 7))
 for ax in [ax1, ax2]:
-    ax.set_title('50uM UA + 0.1M NaF + 10uM R6G for AgNPs-APTES-FTO')
+    ax.set_title('100uM UA + 0.1M NaF + 10uM R6G for AgNPs-APTES-FTO')
     ax.set_xlabel('Raman Shift ($\mathregular{cm^{-1}}$)')
     ax.set_ylabel('Intensity (counts $\mathregular{s^{-1}mW^{-1}}$)')
 
