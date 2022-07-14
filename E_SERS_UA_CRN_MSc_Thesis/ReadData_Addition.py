@@ -30,11 +30,13 @@ def ReadData(path_gamry='', path_raman='', duration=300, date='2022-6-23'):
     data_single = []
 
     for file in files_raman:
-        UA = re.search(r'UA_+([0-9.]+[um]M)', file)
+        UA = re.search(r'UA_+([0-9.]+[um][mM])', file)
         if UA is not None:
             UA = UA.group(1)
             if UA.endswith('uM'):
                 UA = float(UA.removesuffix('uM'))
+            elif UA.endswith('um'):
+                UA = float(UA.removesuffix('um'))
             else:
                 UA = float(UA.removesuffix('mM')) * 1E+3
         else:
