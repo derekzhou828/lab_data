@@ -1,11 +1,12 @@
 import os
 import re
 import time
+from datetime import datetime
 import pandas as pd
 from E_SERS_UA_CRN_MSc_Thesis.ALSBaselineCorrection import *
 
 
-def ReadData(path_gamry='', path_raman='', duration=300, date='2022-6-23'):
+def ReadData(path_gamry='', path_raman='', duration=300):
 
     files_gamry = os.listdir(path_gamry)
     time_potential = {}
@@ -14,8 +15,8 @@ def ReadData(path_gamry='', path_raman='', duration=300, date='2022-6-23'):
         with open(os.path.join(path_gamry, file), 'r') as f:
             lines = f.readlines()
             potential = lines[10].split('\t')[2].split('\t')[0]
-            time_str = date + ' ' + lines[4].split('\t')[2].split('\t')[0]
-            time_array = time.strptime(time_str, '%Y-%m-%d %H:%M:%S')
+            time_str = lines[3].split('\t')[2].split('\t')[0] + ' ' + lines[4].split('\t')[2].split('\t')[0]
+            time_array = time.strptime(time_str, '%d/%m/%Y %H:%M:%S')
             time_stamp = int(time.mktime(time_array))
             time_potential[time_stamp] = potential
             time_list = sorted(list(time_potential.keys()))
@@ -71,8 +72,9 @@ def ReadData(path_gamry='', path_raman='', duration=300, date='2022-6-23'):
 
         with open(os.path.join(path_raman, file), 'r') as f:
             lines = f.readlines()
-            time_str = date + ' ' + lines[2].split(' ')[4]
-            time_array = time.strptime(time_str, '%Y-%m-%d %H:%M:%S')
+            time_info = lines[2].rstrip('\n').split(' ')
+            time_str = time_info[2] + ' ' + time_info[3] + ' ' + time_info[4] + ' ' + time_info[6]
+            time_array = time.strptime(time_str, '%b %d %H:%M:%S %Y')
             time_stamp = int(time.mktime(time_array))
 
         for i in range(len(time_line)):
