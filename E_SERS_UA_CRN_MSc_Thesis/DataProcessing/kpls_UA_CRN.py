@@ -7,7 +7,7 @@ from sklearn.metrics import mean_squared_error, r2_score
 from matplotlib import pyplot as plt
 
 df_DataTJ = pd.read_csv('../Data_csv/DataTJ.csv')
-df_R = df_DataTJ[(df_DataTJ.UA <= 10) & (df_DataTJ.CRN <= 100) & (df_DataTJ.UA != 2) & (df_DataTJ.CRN != 10)]
+df_R = df_DataTJ[(df_DataTJ.UA <= 20) & (df_DataTJ.CRN <= 100) & (df_DataTJ.UA != 2) & (df_DataTJ.CRN != 10)]
 df_normalised = df_R.iloc[:, 3:].copy()
 df_normalised = df_normalised.div(df_normalised['1362.89183'], axis=0)
 df_R = pd.concat([df_R.iloc[:, :3], df_normalised], axis=1)
@@ -21,7 +21,7 @@ r2_list = []
 for i in range(1000):
     x_train, x_test, y_train, y_test = train_test_split(df_R.iloc[:, 3:], df_R[['UA', 'CRN']], test_size=0.2)
 
-    KPLS_model = KPLS(x_train, y_train, n_components=50, nkernel_components=100, kernel='linear', preprocess=True)
+    KPLS_model = KPLS(x_train, y_train, n_components=50, nkernel_components=100, kernel='rbf', preprocess=True)
     KPLS_model.construct_kpls_model()
 
     xKernel = KPLS_model.convert_to_kernel(x_test)
@@ -59,7 +59,7 @@ for ax in [ax1, ax2]:
     ax.set_xlabel('Actual Concentration ($\mu$M)', fontsize=18)
     ax.set_ylabel('Predicted Concentration ($\mu$M)', fontsize=18)
 
-ax1.plot([0, 10], [0, 10], linewidth=2, color='k', linestyle='--')
+ax1.plot([0, 20], [0, 20], linewidth=2, color='k', linestyle='--')
 ax1.errorbar(UA_pred_mean.index, UA_pred_mean, yerr=UA_pred_std, fmt='o', color='blue', capsize=5)
 
 ax1.set_title('Uric acid \nR$^{2}$ = ' + str(format(r2_UA, '.3f')) +
@@ -73,5 +73,5 @@ ax2.set_title('Creatinine \nR$^{2}$ = ' + str(format(r2_CRN, '.3f')) +
               '\nRMSEP = ' + str(format(RMSEP_CRN, '.3f')) + ' $\mu$M',
               loc='left', y=0.8, x=0.05, color='green', fontsize=18)
 
-# plt.savefig('TBR_TPH_regression.png')
+plt.savefig('../Data_Fig/KPLS_UA_CRN.png')
 plt.show()
