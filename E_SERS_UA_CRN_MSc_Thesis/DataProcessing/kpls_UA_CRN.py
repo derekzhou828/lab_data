@@ -1,7 +1,6 @@
 import numpy as np
 import pandas as pd
 from E_SERS_UA_CRN_MSc_Thesis.KernelPLS import *
-from sklearn.utils import resample
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_squared_error, r2_score
 from matplotlib import pyplot as plt
