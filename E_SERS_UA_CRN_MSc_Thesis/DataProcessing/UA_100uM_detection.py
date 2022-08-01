@@ -20,7 +20,7 @@ for i, col in df_plot.iteritems():
     ax.scatter(col.index[228], col.values[228]+15+150*count, marker='x', color='black')
     count += 1
 
-ax.set_title('100uM UA + 0.1M NaF + 10uM R6G for AgNPs-APTES-FTO', pad=10)
+ax.set_title('100uM UA + 0.1M NaF + 10uM R6G for AgNPs', pad=10)
 ax.set_xlabel('Raman Shift ($\mathregular{cm^{-1}}$)')
 ax.set_ylabel('Intensity (counts $\mathregular{s^{-1}mW^{-1}}$)')
 
@@ -43,7 +43,7 @@ for i, col in df_plot.iloc[:, :-1].iteritems():
     ax.scatter(col.index[228], col.values[228]+3+25*count, marker='x', color='black')
     count += 1
 
-ax.set_title('100uM UA + 0.1M NaF + 10uM R6G for Au@AgNPs-APTES-FTO', pad=10)
+ax.set_title('100uM UA + 0.1M NaF + 10uM R6G for Au@AgNPs', pad=10)
 ax.set_xlabel('Raman Shift ($\mathregular{cm^{-1}}$)')
 ax.set_ylabel('Intensity (counts $\mathregular{s^{-1}mW^{-1}}$)')
 
