@@ -14,7 +14,7 @@ wave, intst = df['wave'], df['intst']
 ax = plt.subplot()
 plt.plot(wave, intst)
 plt.ylim(-2, 28)
-ax.set_title('Raman Spectrum for powder Creatinine', fontsize=14, pad=12)
+ax.set_title('Raman Spectrum for Powder Creatinine', fontsize=14, pad=12)
 ax.set_xlabel('Raman Shift ($\mathregular{cm^{-1}}$)')
 ax.set_ylabel('Intensity (counts $\mathregular{s^{-1}mW^{-1}}$)')
 ax.set_yticks([0, 10, 20])
