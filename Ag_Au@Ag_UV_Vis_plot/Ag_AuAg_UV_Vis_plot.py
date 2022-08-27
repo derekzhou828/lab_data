@@ -11,6 +11,7 @@ wavelen2, abs2 = Au_Ag_df[0], Au_Ag_df[1]
 
 # plot AgNP spectra
 plt.plot(wavelen1, abs1)
+plt.xlim(300, 800)
 plt.xlabel('Wavelength (nm)', fontsize=16)
 plt.ylabel('Absorbance (arb.units)', fontsize=16)
 plt.title('UV-Vis spectra of AgNPs', fontsize=16)
@@ -27,6 +28,7 @@ plt.show()
 
 # plot Au@Ag spectra
 plt.plot(wavelen2, abs2)
+plt.xlim(300, 800)
 plt.xlabel('Wavelength (nm)', fontsize=16)
 plt.ylabel('Absorbance (arb.units)', fontsize=16)
 plt.title('UV-Vis spectra of Au@Ag', fontsize=16)

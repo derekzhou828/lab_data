@@ -48,7 +48,7 @@ data_mean = df_all.groupby(['UA'])['1131.63641'].mean()
 data_std = df_all.groupby(['UA'])['1131.63641'].std()
 
 ax = plt.subplot()
-ax.set_title('UA + 0.1M NaF + 10uM R6G for AgNPs-APTES-FTO at -0.6V', pad=10)
+ax.set_title('UA + 0.1M NaF + 10uM R6G for AgNPs-APTES-FTO at -0.6V', fontsize=10)
 ax.set_title('Linear relationship: \n\ny = ' + str(format(slope, '.5f')) + 'x + ' + str(format(intercept, '.5f'))
              + '\nR$^{2}$ = ' + str(format(r_value, '.5f')), loc='left', y=0.75, x=0.05)
 
